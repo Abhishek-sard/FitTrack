@@ -1,3 +1,4 @@
+import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
           Welcome to <span className="text-lime-400">FitTrack</span>
         </h1>
       </main>
+      <Footer/>
     </div>
   );
 }
