@@ -106,17 +106,17 @@ const Footer = () => {
           <ul className="space-y-4 text-sm text-zinc-400">
             <li className="flex gap-3">
               <span className="text-red-500">📍</span>
-              <span>Inaruwa, Sunsari, Nepal</span>
+              <span>Jhumka, Sunsari, Nepal</span>
             </li>
 
             <li className="flex gap-3">
               <span className="text-red-500">📞</span>
-              <span>+977 9800000000</span>
+              <span>+977 9811342113</span>
             </li>
 
             <li className="flex gap-3">
               <span className="text-red-500">✉</span>
-              <span>info@gymx.com</span>
+              <span>fittrack@gymx.com</span>
             </li>
 
             <li className="flex gap-3">
