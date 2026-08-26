@@ -1,16 +1,13 @@
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 
+import Home from "./components/Pages/Home.jsx";
+
 function App() {
   return (
     <div className="min-h-screen bg-slate-950">
       <Navbar />
-
-      <main className="p-10 text-white">
-        <h1 className="text-4xl font-bold">
-          Welcome to <span className="text-lime-400">FitTrack</span>
-        </h1>
-      </main>
+      <Home/>
       <Footer/>
     </div>
   );
