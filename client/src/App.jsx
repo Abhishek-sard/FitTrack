@@ -3,6 +3,7 @@ import Navbar from "./components/layout/Navbar";
 
 import Home from "./components/Pages/Home/Home.jsx";
 import Services from "./components/Pages/Home/Services.jsx";
+import Stats from "./components/Pages/Home/stats.jsx";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Navbar />
       <Home/>
       <Services/>
+      <Stats/>
       <Footer/>
     </div>
   );
