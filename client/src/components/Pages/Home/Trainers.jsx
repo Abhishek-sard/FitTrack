@@ -1,4 +1,3 @@
-import { Instagram, Facebook, Linkedin, ArrowUpRight } from "lucide-react";
 
 const trainers = [
   {
@@ -89,26 +88,6 @@ const Trainers = () => {
                 {/* Social Icons */}
                 <div className="absolute right-4 top-4 flex translate-x-16 flex-col gap-2 transition duration-300 group-hover:translate-x-0">
 
-                  <a
-                    href="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black transition hover:bg-red-500 hover:text-white"
-                  >
-                    <Instagram size={16} />
-                  </a>
-
-                  <a
-                    href="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black transition hover:bg-red-500 hover:text-white"
-                  >
-                    <Facebook size={16} />
-                  </a>
-
-                  <a
-                    href="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black transition hover:bg-red-500 hover:text-white"
-                  >
-                    <Linkedin size={16} />
-                  </a>
 
                 </div>
 
@@ -123,11 +102,8 @@ const Trainers = () => {
                     {trainer.name}
                   </h3>
 
-                  {/* Profile Button */}
-                  <button className="mt-4 flex items-center gap-2 text-sm font-bold uppercase opacity-0 transition duration-300 group-hover:opacity-100">
-                    View Profile
-                    <ArrowUpRight size={17} />
-                  </button>
+      
+        
 
                 </div>
 
