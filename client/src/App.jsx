@@ -2,6 +2,7 @@ import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 
 import Home from "./components/Pages/Home/Home.jsx";
+import Programs from "./components/Pages/Home/Programs.jsx";
 import Services from "./components/Pages/Home/Services.jsx";
 import Stats from "./components/Pages/Home/stats.jsx";
 
@@ -12,6 +13,7 @@ function App() {
       <Home/>
       <Services/>
       <Stats/>
+      <Programs/>
       <Footer/>
     </div>
   );
