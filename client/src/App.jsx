@@ -5,6 +5,7 @@ import Home from "./components/Pages/Home/Home.jsx";
 import Programs from "./components/Pages/Home/Programs.jsx";
 import Services from "./components/Pages/Home/Services.jsx";
 import Stats from "./components/Pages/Home/stats.jsx";
+import Trainers from "./components/Pages/Home/Trainers.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Services/>
       <Stats/>
       <Programs/>
+      <Trainers/>
       <Footer/>
     </div>
   );
