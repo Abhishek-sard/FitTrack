@@ -102,9 +102,6 @@ const Trainers = () => {
                     {trainer.name}
                   </h3>
 
-      
-        
-
                 </div>
 
               </div>
