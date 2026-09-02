@@ -15,6 +15,8 @@ import Membership from "./components/Pages/Home/Membership.jsx";
 // Other Pages
 import Community from "./components/Pages/Community/Community.jsx";
 
+import Progress from "./components/Pages/Progress/Progress.jsx";
+
 function App() {
   return (
     <BrowserRouter>
@@ -47,6 +49,9 @@ function App() {
               path="/community"
               element={<Community />}
             />
+
+
+            <Route path="/progress" element={<progress/>}/>
 
             {/* ================= 404 PAGE ================= */}
             <Route
