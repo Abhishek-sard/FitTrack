@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Activity,
   Bell,
@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [workoutOpen, setWorkoutOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -64,7 +65,7 @@ const Navbar = () => {
 
             <NavItem label="Nutrition" />
             <NavItem label="Progress" />
-            <NavItem label="Community" to="/community" />
+            <NavItem label="Community" to="/community" navigate={navigate} />
           </div>
 
           {/* Right Side */}
@@ -131,11 +132,11 @@ const Navbar = () => {
         {mobileOpen && (
           <div className="border-t border-white/10 py-5 lg:hidden">
             <div className="flex flex-col gap-2">
-              <MobileNavItem label="Home" to="/" />
-              <MobileNavItem label="Workouts" to="/workouts" />
-              <MobileNavItem label="Nutrition" to="/nutrition" />
-              <MobileNavItem label="Progress" to="/progress" />
-              <MobileNavItem label="Community" to="/community" />
+              <MobileNavItem label="Home" />
+              <MobileNavItem label="Workouts" />
+              <MobileNavItem label="Nutrition" />
+              <MobileNavItem label="Progress" />
+              <MobileNavItem label="Community" to="/community" navigate={navigate} />
 
               <div className="mt-3 border-t border-white/10 pt-4">
                 <button className="flex w-full items-center gap-3 rounded-xl bg-lime-400 px-4 py-3 font-semibold text-slate-950">
@@ -151,11 +152,11 @@ const Navbar = () => {
   );
 };
 
-const NavItem = ({ label, active, to = "#" }) => {
+const NavItem = ({ label, active, to = "#", navigate }) => {
   return (
-    <Link
-      to={to}
-      className={`relative block rounded-xl px-4 py-2.5 text-sm font-medium transition ${
+    <button
+      onClick={() => to !== "#" && navigate && navigate(to)}
+      className={`relative rounded-xl px-4 py-2.5 text-sm font-medium transition ${
         active
           ? "bg-lime-400/10 text-lime-400"
           : "text-slate-300 hover:bg-white/5 hover:text-lime-400"
@@ -166,7 +167,7 @@ const NavItem = ({ label, active, to = "#" }) => {
       {active && (
         <span className="absolute bottom-0 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-lime-400" />
       )}
-    </Link>
+    </button>
   );
 };
 
@@ -178,14 +179,14 @@ const DropdownItem = ({ label }) => {
   );
 };
 
-const MobileNavItem = ({ label, to = "#" }) => {
+const MobileNavItem = ({ label, to = "#", navigate }) => {
   return (
-    <Link
-      to={to}
+    <button
+      onClick={() => to !== "#" && navigate && navigate(to)}
       className="rounded-xl px-4 py-3 text-left font-medium text-slate-300 transition hover:bg-lime-400/10 hover:text-lime-400"
     >
       {label}
-    </Link>
+    </button>
   );
 };
 
