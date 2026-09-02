@@ -5,7 +5,6 @@ import {
   Trophy,
   Users,
   Flame,
-  CalendarDays,
   ArrowRight,
   CheckCircle2,
   Dumbbell,
