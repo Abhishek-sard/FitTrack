@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link} from "react-router-dom";
 import {
   Activity,
   Bell,
@@ -63,7 +64,7 @@ const Navbar = () => {
 
             <NavItem label="Nutrition" />
             <NavItem label="Progress" />
-            <NavItem label="Community" />
+            <NavItem label="Community" to="/community" />
           </div>
 
           {/* Right Side */}
@@ -130,11 +131,11 @@ const Navbar = () => {
         {mobileOpen && (
           <div className="border-t border-white/10 py-5 lg:hidden">
             <div className="flex flex-col gap-2">
-              <MobileNavItem label="Home" />
-              <MobileNavItem label="Workouts" />
-              <MobileNavItem label="Nutrition" />
-              <MobileNavItem label="Progress" />
-              <MobileNavItem label="Community" />
+              <MobileNavItem label="Home" to="/" />
+              <MobileNavItem label="Workouts" to="/workouts" />
+              <MobileNavItem label="Nutrition" to="/nutrition" />
+              <MobileNavItem label="Progress" to="/progress" />
+              <MobileNavItem label="Community" to="/community" />
 
               <div className="mt-3 border-t border-white/10 pt-4">
                 <button className="flex w-full items-center gap-3 rounded-xl bg-lime-400 px-4 py-3 font-semibold text-slate-950">
@@ -150,10 +151,11 @@ const Navbar = () => {
   );
 };
 
-const NavItem = ({ label, active }) => {
+const NavItem = ({ label, active, to = "#" }) => {
   return (
-    <button
-      className={`relative rounded-xl px-4 py-2.5 text-sm font-medium transition ${
+    <Link
+      to={to}
+      className={`relative block rounded-xl px-4 py-2.5 text-sm font-medium transition ${
         active
           ? "bg-lime-400/10 text-lime-400"
           : "text-slate-300 hover:bg-white/5 hover:text-lime-400"
@@ -164,7 +166,7 @@ const NavItem = ({ label, active }) => {
       {active && (
         <span className="absolute bottom-0 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-lime-400" />
       )}
-    </button>
+    </Link>
   );
 };
 
@@ -176,11 +178,14 @@ const DropdownItem = ({ label }) => {
   );
 };
 
-const MobileNavItem = ({ label }) => {
+const MobileNavItem = ({ label, to = "#" }) => {
   return (
-    <button className="rounded-xl px-4 py-3 text-left font-medium text-slate-300 transition hover:bg-lime-400/10 hover:text-lime-400">
+    <Link
+      to={to}
+      className="rounded-xl px-4 py-3 text-left font-medium text-slate-300 transition hover:bg-lime-400/10 hover:text-lime-400"
+    >
       {label}
-    </button>
+    </Link>
   );
 };
 
