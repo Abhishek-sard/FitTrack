@@ -51,7 +51,7 @@ function App() {
             />
 
 
-            <Route path="/progress" element={<progress/>}/>
+            <Route path="/progress" element={<Progress/>}/>
 
             {/* ================= 404 PAGE ================= */}
             <Route
