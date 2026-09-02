@@ -17,6 +17,8 @@ import Community from "./components/Pages/Community/Community.jsx";
 
 import Progress from "./components/Pages/Progress/Progress.jsx";
 
+import Nutrition from "./components/Pages/Nutrition/Nutrition.jsx";
+
 function App() {
   return (
     <BrowserRouter>
@@ -52,6 +54,8 @@ function App() {
 
 
             <Route path="/progress" element={<Progress/>}/>
+
+            <Route path="/nutrition" element={<Nutrition/>}/>
 
             {/* ================= 404 PAGE ================= */}
             <Route
