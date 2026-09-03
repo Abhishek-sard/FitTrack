@@ -24,12 +24,12 @@ const Navbar = () => {
     navigate(path);
     setMobileOpen(false);
     setWorkoutOpen(false);
+    setProfileOpen(false);
   };
 
   return (
     <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
         <div className="flex h-20 items-center justify-between">
 
           {/* =====================================================
@@ -48,7 +48,6 @@ const Navbar = () => {
             </h1>
           </button>
 
-
           {/* =====================================================
               DESKTOP NAVIGATION
           ====================================================== */}
@@ -62,16 +61,18 @@ const Navbar = () => {
               navigate={navigate}
             />
 
-
             {/* =================================================
                 WORKOUT DROPDOWN
             ================================================== */}
             <div className="relative">
-
               <button
-                onClick={() => setWorkoutOpen(!workoutOpen)}
+                onClick={() => {
+                  setWorkoutOpen(!workoutOpen);
+                  setProfileOpen(false);
+                }}
                 className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition ${
-                  workoutOpen
+                  workoutOpen ||
+                  location.pathname.startsWith("/workouts/")
                     ? "bg-lime-400/10 text-lime-400"
                     : "text-slate-300 hover:bg-white/5 hover:text-lime-400"
                 }`}
@@ -88,34 +89,56 @@ const Navbar = () => {
                 />
               </button>
 
-
+              {/* Workout Dropdown */}
               {workoutOpen && (
-                <div className="absolute left-0 top-14 w-52 overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-2 shadow-2xl">
+                <div className="absolute left-0 top-14 w-56 overflow-hidden rounded-2xl border border-white/10 bg-slate-900 p-2 shadow-2xl">
 
-                  <DropdownItem
-                    label="All Workouts"
-                    onClick={() => handleNavigation("/workouts")}
+                  {/* All Exercises */}
+                  <NavDropdownItem
+                    label="All Exercises"
+                    active={
+                      location.pathname === "/workouts/all-exercises"
+                    }
+                    onClick={() =>
+                      handleNavigation("/workouts/all-exercises")
+                    }
                   />
 
-                  <DropdownItem
-                    label="Workout Plans"
-                    onClick={() => handleNavigation("/workout-plans")}
-                  />
-
-                  <DropdownItem
+                  {/* Exercises */}
+                  <NavDropdownItem
                     label="Exercises"
-                    onClick={() => handleNavigation("/exercises")}
+                    active={
+                      location.pathname === "/workouts/exercises"
+                    }
+                    onClick={() =>
+                      handleNavigation("/workouts/exercises")
+                    }
                   />
 
-                  <DropdownItem
+                  {/* My Workouts */}
+                  <NavDropdownItem
                     label="My Workouts"
-                    onClick={() => handleNavigation("/my-workouts")}
+                    active={
+                      location.pathname === "/workouts/my-workouts"
+                    }
+                    onClick={() =>
+                      handleNavigation("/workouts/my-workouts")
+                    }
                   />
 
+                  {/* Workout Plans */}
+                  <NavDropdownItem
+                    label="Workout Plans"
+                    active={
+                      location.pathname === "/workouts/plans"
+                    }
+                    onClick={() =>
+                      handleNavigation("/workouts/plans")
+                    }
+                  />
                 </div>
               )}
             </div>
-
 
             {/* Nutrition */}
             <NavItem
@@ -125,7 +148,6 @@ const Navbar = () => {
               navigate={navigate}
             />
 
-
             {/* Progress */}
             <NavItem
               label="Progress"
@@ -134,7 +156,6 @@ const Navbar = () => {
               navigate={navigate}
             />
 
-
             {/* Community */}
             <NavItem
               label="Community"
@@ -142,9 +163,7 @@ const Navbar = () => {
               active={location.pathname === "/community"}
               navigate={navigate}
             />
-
           </div>
-
 
           {/* =====================================================
               RIGHT SIDE
@@ -153,15 +172,22 @@ const Navbar = () => {
 
             {/* Search */}
             <button
+              onClick={() => {
+                // You can add a search page later
+                console.log("Search clicked");
+              }}
               className="rounded-xl p-3 text-slate-400 transition hover:bg-white/5 hover:text-white"
               aria-label="Search"
             >
               <Search size={20} />
             </button>
 
-
             {/* Notification */}
             <button
+              onClick={() => {
+                // Notification functionality can be added later
+                console.log("Notifications clicked");
+              }}
               className="relative rounded-xl p-3 text-slate-400 transition hover:bg-white/5 hover:text-white"
               aria-label="Notifications"
             >
@@ -170,20 +196,17 @@ const Navbar = () => {
               <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-lime-400 ring-2 ring-slate-950" />
             </button>
 
-
             {/* Profile */}
             <div className="relative">
-
               <button
-                onClick={() => setProfileOpen(!profileOpen)}
+                onClick={() => {
+                  setProfileOpen(!profileOpen);
+                  setWorkoutOpen(false);
+                }}
                 className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 transition hover:border-lime-400/50"
               >
-
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-lime-400 to-emerald-500">
-                  <User
-                    size={18}
-                    className="text-slate-950"
-                  />
+                  <User size={18} className="text-slate-950" />
                 </div>
 
                 <div className="text-left">
@@ -202,9 +225,7 @@ const Navbar = () => {
                     profileOpen ? "rotate-180" : ""
                   }`}
                 />
-
               </button>
-
 
               {/* Profile Dropdown */}
               {profileOpen && (
@@ -212,18 +233,12 @@ const Navbar = () => {
 
                   <DropdownItem
                     label="My Profile"
-                    onClick={() => {
-                      setProfileOpen(false);
-                      navigate("/profile");
-                    }}
+                    onClick={() => handleNavigation("/profile")}
                   />
 
                   <DropdownItem
                     label="Settings"
-                    onClick={() => {
-                      setProfileOpen(false);
-                      navigate("/settings");
-                    }}
+                    onClick={() => handleNavigation("/settings")}
                   />
 
                   <div className="my-2 border-t border-white/10" />
@@ -234,14 +249,10 @@ const Navbar = () => {
                   >
                     Logout
                   </button>
-
                 </div>
               )}
-
             </div>
-
           </div>
-
 
           {/* =====================================================
               MOBILE MENU BUTTON
@@ -251,22 +262,15 @@ const Navbar = () => {
             className="rounded-xl p-3 text-white transition hover:bg-white/5 lg:hidden"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? (
-              <X size={24} />
-            ) : (
-              <Menu size={24} />
-            )}
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-
         </div>
-
 
         {/* =====================================================
             MOBILE MENU
         ====================================================== */}
         {mobileOpen && (
           <div className="border-t border-white/10 py-5 lg:hidden">
-
             <div className="flex flex-col gap-2">
 
               {/* Home */}
@@ -277,15 +281,64 @@ const Navbar = () => {
                 navigate={handleNavigation}
               />
 
+              {/* =================================================
+                  MOBILE WORKOUTS
+              ================================================== */}
+              <div className="rounded-2xl border border-white/5 bg-slate-900/50 p-2">
 
-              {/* Workouts */}
-              <MobileNavItem
-                label="Workouts"
-                to="/workouts"
-                active={location.pathname === "/workouts"}
-                navigate={handleNavigation}
-              />
+                <div className="px-4 py-2">
+                  <div className="flex items-center gap-2">
+                    <Dumbbell
+                      size={16}
+                      className="text-lime-400"
+                    />
 
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Workouts
+                    </p>
+                  </div>
+                </div>
+
+                {/* All Exercises */}
+                <MobileNavItem
+                  label="All Exercises"
+                  to="/workouts/all-exercises"
+                  active={
+                    location.pathname === "/workouts/all-exercises"
+                  }
+                  navigate={handleNavigation}
+                />
+
+                {/* Exercises */}
+                <MobileNavItem
+                  label="Exercises"
+                  to="/workouts/exercises"
+                  active={
+                    location.pathname === "/workouts/exercises"
+                  }
+                  navigate={handleNavigation}
+                />
+
+                {/* My Workouts */}
+                <MobileNavItem
+                  label="My Workouts"
+                  to="/workouts/my-workouts"
+                  active={
+                    location.pathname === "/workouts/my-workouts"
+                  }
+                  navigate={handleNavigation}
+                />
+
+                {/* Workout Plans */}
+                <MobileNavItem
+                  label="Workout Plans"
+                  to="/workouts/plans"
+                  active={
+                    location.pathname === "/workouts/plans"
+                  }
+                  navigate={handleNavigation}
+                />
+              </div>
 
               {/* Nutrition */}
               <MobileNavItem
@@ -295,7 +348,6 @@ const Navbar = () => {
                 navigate={handleNavigation}
               />
 
-
               {/* Progress */}
               <MobileNavItem
                 label="Progress"
@@ -303,7 +355,6 @@ const Navbar = () => {
                 active={location.pathname === "/progress"}
                 navigate={handleNavigation}
               />
-
 
               {/* Community */}
               <MobileNavItem
@@ -313,10 +364,8 @@ const Navbar = () => {
                 navigate={handleNavigation}
               />
 
-
               {/* Mobile Profile */}
               <div className="mt-3 border-t border-white/10 pt-4">
-
                 <button
                   onClick={() => handleNavigation("/profile")}
                   className="flex w-full items-center gap-3 rounded-xl bg-lime-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-lime-300"
@@ -324,19 +373,14 @@ const Navbar = () => {
                   <User size={18} />
                   My Profile
                 </button>
-
               </div>
-
             </div>
-
           </div>
         )}
-
       </div>
     </nav>
   );
 };
-
 
 /* =========================================================
    DESKTOP NAV ITEM
@@ -348,7 +392,6 @@ const NavItem = ({
   to,
   navigate,
 }) => {
-
   return (
     <button
       onClick={() => navigate(to)}
@@ -367,16 +410,43 @@ const NavItem = ({
   );
 };
 
+/* =========================================================
+   WORKOUT DROPDOWN ITEM
+========================================================= */
+
+const NavDropdownItem = ({
+  label,
+  onClick,
+  active = false,
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`w-full rounded-xl px-4 py-3 text-left text-sm font-medium transition ${
+        active
+          ? "bg-lime-400/10 text-lime-400"
+          : "text-slate-300 hover:bg-lime-400/10 hover:text-lime-400"
+      }`}
+    >
+      <div className="flex items-center justify-between">
+        <span>{label}</span>
+
+        {active && (
+          <span className="h-1.5 w-1.5 rounded-full bg-lime-400" />
+        )}
+      </div>
+    </button>
+  );
+};
 
 /* =========================================================
-   DROPDOWN ITEM
+   PROFILE DROPDOWN ITEM
 ========================================================= */
 
 const DropdownItem = ({
   label,
   onClick,
 }) => {
-
   return (
     <button
       onClick={onClick}
@@ -386,7 +456,6 @@ const DropdownItem = ({
     </button>
   );
 };
-
 
 /* =========================================================
    MOBILE NAV ITEM
@@ -398,11 +467,10 @@ const MobileNavItem = ({
   active = false,
   navigate,
 }) => {
-
   return (
     <button
       onClick={() => navigate(to)}
-      className={`rounded-xl px-4 py-3 text-left font-medium transition ${
+      className={`w-full rounded-xl px-4 py-3 text-left font-medium transition ${
         active
           ? "bg-lime-400/10 text-lime-400"
           : "text-slate-300 hover:bg-lime-400/10 hover:text-lime-400"
@@ -412,6 +480,5 @@ const MobileNavItem = ({
     </button>
   );
 };
-
 
 export default Navbar;
