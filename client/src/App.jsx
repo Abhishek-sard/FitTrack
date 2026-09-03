@@ -19,18 +19,22 @@ import Progress from "./components/Pages/Progress/Progress.jsx";
 
 import Nutrition from "./components/Pages/Nutrition/Nutrition.jsx";
 
+// workouts
+import Exercises from "./components/Pages/Workouts/Exercises.jsx";
+import WorkoutPlans from "./components/Pages/Workouts/WorkoutPlans.jsx";
+import MyWorkouts from "./components/Pages/Workouts/MyWorkouts.jsx";
+import AllExercises from "./components/Pages/Workouts/AllExercises.jsx";
+
 function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-slate-950 text-white">
-        
         {/* ================= NAVBAR ================= */}
         <Navbar />
 
         {/* ================= MAIN CONTENT ================= */}
         <main>
           <Routes>
-
             {/* ================= HOME PAGE ================= */}
             <Route
               path="/"
@@ -47,15 +51,19 @@ function App() {
             />
 
             {/* ================= COMMUNITY PAGE ================= */}
-            <Route
-              path="/community"
-              element={<Community />}
-            />
+            <Route path="/community" element={<Community />} />
 
+            <Route path="/progress" element={<Progress />} />
 
-            <Route path="/progress" element={<Progress/>}/>
+            <Route path="/nutrition" element={<Nutrition />} />
 
-            <Route path="/nutrition" element={<Nutrition/>}/>
+            <Route path="/workouts/all-exercises" element={<AllExercises />} />
+
+            <Route path="/workouts/exercises" element={<Exercises />} />
+
+            <Route path="/workouts/my-workouts" element={<MyWorkouts />} />
+
+            <Route path="/workouts/plans" element={<WorkoutPlans />} />
 
             {/* ================= 404 PAGE ================= */}
             <Route
@@ -85,13 +93,11 @@ function App() {
                 </div>
               }
             />
-
           </Routes>
         </main>
 
         {/* ================= FOOTER ================= */}
         <Footer />
-
       </div>
     </BrowserRouter>
   );
