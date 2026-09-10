@@ -3,6 +3,8 @@ import cors from "cors";
 import "dotenv/config";
 import ConnectDB from "./config/db.js";
 
+const authRoutes = require("./routes/authRoutes.js");
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -12,6 +14,10 @@ app.use(express.json());
 app.get("/api/health", (_req, res) => {
     res.json({status: "ok"});
 });
+
+
+//API ROUTES
+app.use("/api/auth", authRoutes);
 
 ConnectDB()
 .then(()=>{
