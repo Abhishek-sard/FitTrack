@@ -1,39 +1,43 @@
-const mongoose = require("mongoose");
-
+import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    name:{
       type: String,
-      required: true,
+      required:[true, "Name is required"],
       trim: true,
+      minlength: 2,
+      maxlength: 50,
     },
-
-    email: {
+    email:{
       type: String,
-      required: true,
+      required:[true, "Email is required"],
       unique: true,
-      lowercase: true,
+      lowecase: true,
       trim: true,
     },
-    password: {
+    password:{
       type: String,
-      required: true,
+      required: [true, "Password is required"],
       minlength: 6,
+      select: false,
     },
-    role: {
+    role:{
       type: String,
       enum: ["user", "admin"],
       default: "user",
     },
-
-    profileImage: {
+    profileImage:{
       type: String,
       default: "",
+    },
+    isActive:{
+      type: Boolean,
+      default: true,
     },
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-export default ("Users", userSchema);
+export  {"User", userSchema};
