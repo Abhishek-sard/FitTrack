@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import ConnectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
+import exerciseRoutes from "./routes/exerciseRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -17,6 +18,8 @@ app.get("/api/health", (_req, res) => {
 
 //API ROUTES
 app.use("/api/auth", authRoutes);
+
+app.use("/api/exercises", exerciseRoutes);
 
 const startServer = async () => {
     await ConnectDB();
