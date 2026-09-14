@@ -14,4 +14,4 @@ const admin = (req, res, next) => {
     next();
 };
 
-export { admin };
+export default admin;

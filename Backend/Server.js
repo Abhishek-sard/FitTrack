@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import ConnectDB from "./config/db.js";
-
-const authRoutes = require("./routes/authRoutes.js");
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
