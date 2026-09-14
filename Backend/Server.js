@@ -18,13 +18,15 @@ app.get("/api/health", (_req, res) => {
 //API ROUTES
 app.use("/api/auth", authRoutes);
 
-ConnectDB()
-.then(()=>{
+const startServer = async () => {
+    await ConnectDB();
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
+        console.log(`Health check: http://localhost:${port}/api/health`);
     });
+};
 
-})
-.catch((err) => {
-    console.log("MongoDB connection failed !!!", err);
-})
+startServer().catch((err) => {
+    console.error("Server startup failed:", err);
+    process.exit(1);
+});

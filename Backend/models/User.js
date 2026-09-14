@@ -1,36 +1,37 @@
 import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema(
   {
-    name:{
+    name: {
       type: String,
-      required:[true, "Name is required"],
+      required: [true, "Name is required"],
       trim: true,
       minlength: 2,
       maxlength: 50,
     },
-    email:{
+    email: {
       type: String,
-      required:[true, "Email is required"],
+      required: [true, "Email is required"],
       unique: true,
-      lowecase: true,
+      lowercase: true,
       trim: true,
     },
-    password:{
+    password: {
       type: String,
       required: [true, "Password is required"],
       minlength: 6,
       select: false,
     },
-    role:{
+    role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
     },
-    profileImage:{
+    profileImage: {
       type: String,
       default: "",
     },
-    isActive:{
+    isActive: {
       type: Boolean,
       default: true,
     },
@@ -40,4 +41,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-export default {"User": userSchema};
+const User = mongoose.model("User", userSchema);
+
+export default User;

@@ -1,64 +1,58 @@
-import { JsonWebToken } from "jsonwebtoken";
-import User from "../models/userModel.js";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
 const protect = async (req, res, next) => {
-    try{
-        let token;
+  try {
+    let token;
 
-        //check Authorization header
-        if(
-            req.headers.authorization &&
-            req.headers.authorization.startsWith("Bearer")
-        ){
-            token = req.headers.authorization.split("")[1];
-        }
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer ")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
 
-        //No token
-        if(!token){
-            return res.status(401).json({
-                success:false,
-                message: "Not authorized. Please login first.",
-            });
-        }
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Not authorized. Please login first.",
+      });
+    }
 
-        //verify token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select("-password");
 
-        //find user
-        const user = await User.findById(decoded.id).select("-password");
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "User no longer exists.",
+      });
+    }
 
+    if (!user.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: "Your account has been deactivated.",
+      });
+    }
 
-        if(!user){
-            return res.status(401).json({
-                success:false,
-                message: "User no longer exists.",
-            });
-        }
+    req.user = user;
+    next();
+  } catch (error) {
+    console.error("Authentication Error:", error.message);
 
-        //check account status
-        if(!user.isActive){
-            return res.status(403).json({
-                success:false,
-                message: "Your account has been deactivated.",
-            });
-        }
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({
+        success: false,
+        message: "Token expired. Please login again.",
+      });
+    }
 
-        //Attach user to request
-        req.user = user;
-
-        next();
-
-    }catch(error){
-        console.error("Authentication Error:", error.message);
-        if(error.name === "TokenExpiredError"){
-            return res.status(401).json({
-                success:false,
-                message: "Token has expired. please login again.",
-            });
-        }
-    };
-
-
-
+    return res.status(401).json({
+      success: false,
+      message: "Invalid token. Please login again.",
+    });
+  }
 };
+
 export default protect;

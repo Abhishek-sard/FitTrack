@@ -1,66 +1,111 @@
-import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import User from "../models/User.js";
+import generateToken from "../utils/generateToken.js";
 
-const protect = async (req, res, next) => {
+const registerUser = async (req, res) => {
   try {
-    let token;
+    const { name, email, password } = req.body;
 
-    // Check Authorization header
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer ")
-    ) {
-      token = req.headers.authorization.split(" ")[1];
-    }
-
-    // No token
-    if (!token) {
-      return res.status(401).json({
+    if (!name || !email || !password) {
+      return res.status(400).json({
         success: false,
-        message: "Not authorized. Please login first.",
+        message: "Name, email, and password are required.",
       });
     }
 
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // Find user
-    const user = await User.findById(decoded.id).select("-password");
-
-    if (!user) {
-      return res.status(401).json({
+    const userExists = await User.findOne({ email: email.toLowerCase() });
+    if (userExists) {
+      return res.status(400).json({
         success: false,
-        message: "User no longer exists.",
+        message: "User already exists.",
       });
     }
 
-    // Check account status
-    if (!user.isActive) {
-      return res.status(403).json({
-        success: false,
-        message: "Your account has been deactivated.",
-      });
-    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Attach user to request
-    req.user = user;
+    const user = await User.create({
+      name,
+      email: email.toLowerCase(),
+      password: hashedPassword,
+    });
 
-    next();
+    res.status(201).json({
+      success: true,
+      token: generateToken(user._id),
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
   } catch (error) {
-    console.error("Authentication Error:", error.message);
-
-    if (error.name === "TokenExpiredError") {
-      return res.status(401).json({
-        success: false,
-        message: "Token expired. Please login again.",
-      });
-    }
-
-    return res.status(401).json({
+    res.status(500).json({
       success: false,
-      message: "Invalid token. Please login again.",
+      message: error.message,
     });
   }
 };
 
-export default protect;
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required.",
+      });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() }).select("+password");
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password.",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password.",
+      });
+    }
+
+    res.json({
+      success: true,
+      token: generateToken(user._id),
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getMe = async (req, res) => {
+  res.json({
+    success: true,
+    user: req.user,
+  });
+};
+
+const adminTest = (req, res) => {
+  res.json({
+    success: true,
+    message: "Admin access confirmed.",
+    user: req.user,
+  });
+};
+
+export { registerUser, loginUser, getMe, adminTest };
