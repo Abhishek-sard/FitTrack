@@ -1,2 +1,21 @@
 .env
 server.js
+1. Authentication & Authorization ✅
+        ↓
+2. Exercise Management           ← NEXT
+        ↓
+3. My Workouts
+        ↓
+4. Workout Plans
+        ↓
+5. Progress Tracking
+        ↓
+6. Nutrition
+        ↓
+7. Community
+        ↓
+8. Membership
+        ↓
+9. Trainers
+        ↓
+10. Admin Dashboard
